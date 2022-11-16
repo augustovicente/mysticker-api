@@ -27,8 +27,14 @@ Route.get('/', async () => {
 
 Route.get('health', async ({ response }) => {
     const report = await HealthCheck.getReport()
-
-    return report.healthy
-        ? response.ok(report)
-        : response.badRequest(report)
+    return report.healthy ? response.ok(report) : response.badRequest(report)
 })
+
+Route.post('login', 'AuthController.login');
+Route.post('authenticate-user', 'AuthController.authenticateUser').middleware('auth');
+
+Route.post('register', 'AuthController.register');
+Route.post('reset-password/:id', 'AuthController.resetPassword');
+Route.post('rp-use-code', 'ValidationCodeController.use_validation_code');
+Route.post('rp-create-code', 'ValidationCodeController.validation_code');
+Route.post('rp-create-email-code', 'ValidationCodeController.validate_email');
