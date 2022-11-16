@@ -31,10 +31,10 @@ Route.get('health', async ({ response }) => {
 })
 
 Route.post('login', 'AuthController.login');
-Route.post('authenticate-user', 'AuthController.authenticateUser').middleware('auth');
+Route.post('register', 'UserController.register'); // TODO
+Route.post('reset-password-by-link', 'AuthController.resetPassword'); // TODO
+Route.post('forgot-password', 'AuthController.resetPassword'); // TODO
 
-Route.post('register', 'AuthController.register');
-Route.post('reset-password/:id', 'AuthController.resetPassword');
-Route.post('rp-use-code', 'ValidationCodeController.use_validation_code');
-Route.post('rp-create-code', 'ValidationCodeController.validation_code');
-Route.post('rp-create-email-code', 'ValidationCodeController.validate_email');
+Route.post('reset-password', 'AuthController.resetPassword').middleware('auth'); // TODO
+Route.post('authenticate-user', 'AuthController.authenticateUser').middleware('auth');
+Route.post('edit-data', 'UserController.edit_data').middleware('auth'); // TODO
