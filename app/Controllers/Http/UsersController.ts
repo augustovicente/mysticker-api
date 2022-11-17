@@ -19,7 +19,7 @@ export default class UsersController
         // salvando o código de validação
         const validation_code = await user.related('validation_codes').create({
             code: the_code,
-            expiration_date_time: DateTime.now().plus({ minutes: 10 }),
+            expiration_date_time: DateTime.now().plus({ hours: 2 }),
         });
         let url_validation = `https://mysticker.io/validation/${validation_code.code}`;
         // enviando o email de confirmação
