@@ -119,7 +119,7 @@ export default class AuthController
      * @description Faz uma autenticação do usuários pelo token
      * e retorna seus dados salvos.
      */
-    public async authenticateUser ({ auth, response }: HttpContextContract)
+    public async get_authenticated_user ({ auth, response }: HttpContextContract)
     {
         const user = await auth.authenticate();
 
