@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import { rules, schema } from '@ioc:Adonis/Core/Validator';
-import { validationMessage } from 'resources/locales/en-US/validation';
+import { validationMessage } from '../../resources/locales/en-US/validation';
 
 export class LoginValidator
 {

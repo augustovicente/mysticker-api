@@ -3,8 +3,8 @@ import User from 'App/Models/User';
 import { send_email } from 'App/Services/MailService';
 import { GenerateValidationCode } from 'App/Services/Utils';
 import { RegisterValidator } from 'App/Validators/UserValidator';
-import { DateTime } from 'luxon';
 import Env from '@ioc:Adonis/Core/Env';
+import { DateTime } from 'luxon';
 
 export default class UsersController
 {
@@ -24,13 +24,13 @@ export default class UsersController
         let url_validation = `https://mysticker.io/validation/${validation_code.code}`;
         // enviando o email de confirmação
         send_email(
-            email, 
-            'Verificação de conta', 
-            { verification_url: url_validation }, 
+            email,
+            'Verificação de conta',
+            { verification_url: url_validation },
             Env.get('SENDGRID_TEMPLATE_VERIFICATION_ACCOUNT')
         );
 
-        return response.ok({ 
+        return response.ok({
             message: 'User created successfully',
             user,
         });

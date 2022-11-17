@@ -9,7 +9,7 @@ export default class ValidationCode extends BaseModel {
     @column()
     public code: string;
 
-    @column.dateTime({ autoCreate: false })
+    @column()
     public expiration_date_time: DateTime;
 
     @column()
@@ -20,10 +20,10 @@ export default class ValidationCode extends BaseModel {
 
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
-    
+
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
-    
+
     @belongsTo(() => User, { localKey: 'user_id', foreignKey: 'id' })
     public user: BelongsTo<typeof User>;
 }
