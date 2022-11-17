@@ -2,7 +2,7 @@ import ValidationCode from "App/Models/ValidationCode";
 
 export const GenerateValidationCode = async () =>
 {
-    let the_code:string = Math.floor(100000 + Math.random() * 900000).toString();
+    let the_code:string = Math.floor(10000 + Math.random() * 90000).toString();
     // checando se ele é único
     let is_unique:boolean = false;
     while(!is_unique)
@@ -14,7 +14,7 @@ export const GenerateValidationCode = async () =>
 
         if(_validation)
         {
-            the_code = Math.floor(100000 + Math.random() * 900000).toString();
+            the_code = Math.floor(10000 + Math.random() * 90000).toString();
         }
         else
         {

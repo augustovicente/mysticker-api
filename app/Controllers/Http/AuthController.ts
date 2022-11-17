@@ -114,7 +114,7 @@ export default class AuthController
             return response.ok({ status: 'Password has been updated' });
         }
     }
-     
+
     /**
      * @description Faz uma autenticação do usuários pelo token
      * e retorna seus dados salvos.
@@ -141,9 +141,9 @@ export default class AuthController
         let url_validation = `https://mysticker.io/reset-pwd/${validation_code.code}`;
         // enviando o email de confirmação
         send_email(
-            email, 
-            'Link de recuperação', 
-            { verification_url: url_validation }, 
+            email,
+            'Link de recuperação',
+            { verification_url: url_validation },
             Env.get('SENDGRID_TEMPLATE_RESET_PASSWORD')
         );
 
