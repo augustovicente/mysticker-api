@@ -21,6 +21,9 @@ export default class User extends BaseModel {
     public full_number?: string
 
     @column()
+    public cpf?: string
+
+    @column()
     public address_zip_code?: string
 
     @column()
