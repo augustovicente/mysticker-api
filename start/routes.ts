@@ -31,10 +31,12 @@ Route.get('health', async ({ response }) => {
 })
 
 Route.post('login', 'AuthController.login');
-Route.post('register', 'UserController.register'); // TODO
-Route.post('reset-password-by-link', 'AuthController.resetPassword'); // TODO
-Route.post('forgot-password', 'AuthController.resetPassword'); // TODO
+Route.post('register', 'UserController.register');
+Route.post('verify-email/:code', 'UserController.verify_email');
+Route.post('forgot-password', 'AuthController.forgot_password');
+Route.post('reset-password-by-link/:code', 'AuthController.reset_password_by_link');
 
-Route.post('reset-password', 'AuthController.resetPassword').middleware('auth'); // TODO
+Route.post('reset-password', 'AuthController.reset_password').middleware('auth');
 Route.post('authenticate-user', 'AuthController.authenticateUser').middleware('auth');
 Route.post('edit-data', 'UserController.edit_data').middleware('auth'); // TODO
+Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth'); // TODO

@@ -14,6 +14,7 @@ export default class Users extends BaseSchema {
             table.string('address_zip_code', 8).nullable();
             table.string('address_number', 8).nullable();
             table.string('address_complement', 25).nullable();
+            table.boolean('email_verified').notNullable().defaultTo(false);
             table.timestamps(true)
         })
     }

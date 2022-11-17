@@ -7,8 +7,9 @@ export class LoginValidator
     constructor (protected ctx: HttpContextContract){}
 
     public schema = schema.create({
-        email: schema.string.optional([
+        email: schema.string([
             rules.trim(),
+            rules.required(),
             rules.email(),
             rules.exists({ column: 'email', table: 'users' }),
         ]),
@@ -17,6 +18,23 @@ export class LoginValidator
 
     public messages = validationMessage;
     public cacheKey = this.ctx?.routeKey;
+}
+
+export class ForgotPasswordValidator
+{
+    constructor (protected ctx: HttpContextContract)
+    {}
+
+    public schema = schema.create({
+        email: schema.string({ trim: true }, [
+            rules.required(),
+            rules.email(),
+            rules.exists({ column: 'email', table: 'users' }),
+        ]),
+    });
+
+    public messages = validationMessage;
+    public cacheKey = this.ctx?.routeKey
 }
 
 export class ResetPasswordValidator
