@@ -11,7 +11,6 @@ export class LoginValidator
             rules.trim(),
             rules.required(),
             rules.email(),
-            rules.exists({ column: 'email', table: 'users' }),
         ]),
         password: schema.string([rules.required()]),
     });

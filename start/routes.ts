@@ -21,10 +21,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
-Route.get('/', async () => {
-    return { hello: 'world' }
-})
-
 Route.get('health', async ({ response }) => {
     const report = await HealthCheck.getReport()
     return report.healthy ? response.ok(report) : response.badRequest(report)
@@ -37,6 +33,6 @@ Route.post('forgot-password', 'AuthController.forgot_password');
 Route.post('reset-password-by-link/:code', 'AuthController.reset_password_by_link');
 
 Route.post('reset-password', 'AuthController.reset_password').middleware('auth');
-Route.post('authenticate-user', 'AuthController.authenticateUser').middleware('auth');
+Route.post('get-authenticated-user', 'AuthController.get_authenticated_user').middleware('auth');
 Route.post('edit-data', 'UserController.edit_data').middleware('auth'); // TODO
 Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth'); // TODO
