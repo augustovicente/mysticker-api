@@ -1,3 +1,5 @@
+const Web3 = require("web3");
+const web3 = new Web3("https://goerli.infura.io/v3/fee8917ab09e4e409ada6f602b288672");
 // get counts
 const get_bronze_count = () => 100;
 const get_gold_count = () => 10;
