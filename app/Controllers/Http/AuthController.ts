@@ -25,7 +25,7 @@ export default class AuthController
         }
         else
         {
-            return response.methodNotAllowed({ user });
+            return response.methodNotAllowed({ message: 'Usuário não verificado' });
         }
     }
 

@@ -27,7 +27,7 @@ Route.get('health', async ({ response }) => {
 })
 
 Route.post('login', 'AuthController.login');
-Route.post('register', 'UsersController.register');
+Route.post('register', 'UserController.register');
 Route.post('verify-email/:code', 'UserController.verify_email');
 Route.post('forgot-password', 'AuthController.forgot_password');
 Route.post('reset-password-by-link/:code', 'AuthController.reset_password_by_link');
