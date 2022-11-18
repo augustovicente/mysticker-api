@@ -2,9 +2,10 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User';
 import { send_email } from 'App/Services/MailService';
 import { GenerateValidationCode } from 'App/Services/Utils';
-import { EditUserValidator, RegisterUserValidator } from 'App/Validators/UserValidator';
+import { EditUserValidator, RegisterUserValidator, WalletValidator } from 'App/Validators/UserValidator';
 import { DateTime } from 'luxon';
 import Env from '@ioc:Adonis/Core/Env';
+import Wallet from 'App/Models/Wallet';
 
 export default class UsersController
 {
@@ -58,6 +59,23 @@ export default class UsersController
             address_number: number,
             cpf,
             full_number: phone,
+        }).save();
+
+        return response.ok({ 
+            message: 'User updated successfully',
+            user: auth?.user,
+        });
+    }
+
+    public async vinculate_wallet ({ request, response, auth }: HttpContextContract)
+    {
+        const { wallet } = await request.validate(WalletValidator)
+            , user = await auth.authenticate()
+            , new_wallet = new Wallet();
+
+        new_wallet.merge({ 
+            address: wallet,
+            user_id: user.id,
         }).save();
 
         return response.ok({ 

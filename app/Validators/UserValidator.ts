@@ -40,3 +40,15 @@ export class EditUserValidator
     public messages = validationMessage;
     public cacheKey = this.ctx?.routeKey;
 }
+
+export class WalletValidator
+{
+    constructor (protected ctx: HttpContextContract){}
+
+    public schema = schema.create({
+        wallet: schema.string.optional({}, [rules.required()]),
+    });
+
+    public messages = validationMessage;
+    public cacheKey = this.ctx?.routeKey;
+}

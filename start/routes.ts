@@ -34,5 +34,5 @@ Route.post('reset-password-by-link/:code', 'AuthController.reset_password_by_lin
 
 Route.post('reset-password', 'AuthController.reset_password').middleware('auth');
 Route.post('get-authenticated-user', 'AuthController.get_authenticated_user').middleware('auth');
-Route.post('edit-data', 'UserController.edit_data').middleware('auth'); // TODO
-Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth'); // TODO
+Route.post('edit-data', 'UserController.edit_data').middleware('auth');
+Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth');

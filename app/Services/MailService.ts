@@ -13,7 +13,7 @@ export const send_email = async (email_to:string, subject:string, variable_obj:a
             subject: subject,
             templateId,
             dynamicTemplateData: {
-                variable_obj
+                ...variable_obj
             },
         });
     }

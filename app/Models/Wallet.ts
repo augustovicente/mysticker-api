@@ -9,6 +9,9 @@ export default class Wallet extends BaseModel {
     @column()
     public address: string
 
+    @column()
+    public user_id: number
+
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
     
