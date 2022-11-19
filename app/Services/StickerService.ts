@@ -1,138 +1,128 @@
-const Web3 = require("web3");
+import { abi, contract_address } from "App/Solidity/contract";
+import { stickers } from "App/Solidity/stickers";
+import Web3 from 'web3';
 const web3 = new Web3("https://goerli.infura.io/v3/fee8917ab09e4e409ada6f602b288672");
-// get counts
-const get_bronze_count = () => 100;
-const get_gold_count = () => 10;
-const get_silver_count = () => 5;
+export type Sticker = {
+    id: number,
+    name: string,
+    rarity: number,
+};
+// contract get available stickers
+const get_available_stickers: (number) => Promise<number> = (id:number) =>
+{
+    return new Promise((resolve, reject) =>
+    {
+        const contract = new web3.eth.Contract(abi as any, contract_address);
+        contract.methods.getAvailable(id).call().then((result) =>
+        {
+            resolve(result);
+        })
+        .catch((error) =>
+        {
+            reject(error);
+        });
+    });
+}
 // get the stickers
-const get_bronze_stickers = () => [
-    {id: 0},
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12},
-    {id: 13},
-    {id: 14},
-    {id: 15},
-    {id: 16},
-    {id: 17},
-    {id: 18},
-    {id: 19},
-    {id: 20},
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12},
-    {id: 13},
-    {id: 14},
-    {id: 15},
-    {id: 16},
-    {id: 17},
-    {id: 18},
-    {id: 19},
-    {id: 20},
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12},
-    {id: 13},
-    {id: 14},
-    {id: 15},
-    {id: 16},
-    {id: 17},
-    {id: 18},
-    {id: 19},
-    {id: 20},
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12},
-    {id: 13},
-    {id: 14},
-    {id: 15},
-    {id: 16},
-    {id: 17},
-    {id: 18},
-    {id: 19},
-    {id: 20},
-    {id: 1},
-    {id: 2},
-    {id: 3},
-    {id: 4},
-    {id: 5},
-    {id: 6},
-    {id: 7},
-    {id: 8},
-    {id: 9},
-    {id: 10},
-    {id: 11},
-    {id: 12},
-    {id: 13},
-    {id: 14},
-    {id: 15},
-    {id: 16},
-    {id: 17},
-    {id: 18},
-    {id: 19},
-    {id: 20},
-];
-const get_silver_stickers = () => [
-    {id: 21},
-    {id: 22},
-    {id: 23},
-    {id: 24},
-    {id: 25},
-    {id: 26},
-    {id: 27},
-    {id: 28},
-    {id: 29},
-    {id: 30},
-    {id: 31},
-];
-const get_gold_stickers = () => [
-    {id: 32},
-    {id: 33},
-    {id: 34},
-    {id: 35},
-    {id: 36},
-];
+const get_bronze_stickers = async () =>
+{
+    let bronze_stickers:Sticker[] = [];
+    for(const country of stickers)
+    {
+        // a raridade do pais é bronze
+        let available = await get_available_stickers(country.id);
+        if(available > 0)
+        {
+            for(let index = 0; index < available; index++)
+            {
+                bronze_stickers.push({
+                    id: country.id,
+                    name: country.country,
+                    rarity: 3
+                });   
+            }
+        }
+        // pegando os jogadores
+        for(const player of country.players)
+        {
+            if(player.rarity === 3)
+            {
+                let _available = await get_available_stickers(player.id);
+                if(_available > 0)
+                {
+                    for(let index = 0; index < _available; index++)
+                    {
+                        bronze_stickers.push({
+                            id: player.id,
+                            name: player.name,
+                            rarity: player.rarity
+                        });
+                    }
+                }
+            }
+        }
+    }
 
-module.exports = {
-    get_bronze_count,
-    get_gold_count,
-    get_silver_count,
+    return bronze_stickers;
+};
+const get_silver_stickers = async () =>
+{
+    let silver_stickers:Sticker[] = [];
+    for(const country of stickers)
+    {
+        // pegando os jogadores
+        for(const player of country.players)
+        {
+            if(player.rarity === 2)
+            {
+                let _available = await get_available_stickers(player.id);
+                if(_available > 0)
+                {
+                    for(let index = 0; index < _available; index++)
+                    {
+                        silver_stickers.push({
+                            id: player.id,
+                            name: player.name,
+                            rarity: player.rarity
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    return silver_stickers;
+};
+const get_gold_stickers = async () =>
+{
+    let gold_stickers:Sticker[] = [];
+    for(const country of stickers)
+    {
+        // pegando os jogadores
+        for(const player of country.players)
+        {
+            if(player.rarity === 1)
+            {
+                let _available = await get_available_stickers(player.id);
+                if(_available > 0)
+                {
+                    for(let index = 0; index < _available; index++)
+                    {
+                        gold_stickers.push({
+                            id: player.id,
+                            name: player.name,
+                            rarity: player.rarity
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    return gold_stickers;
+}
+
+export {
     get_bronze_stickers,
     get_silver_stickers,
     get_gold_stickers

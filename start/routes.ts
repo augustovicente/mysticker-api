@@ -18,6 +18,7 @@
 |
 */
 
+import Event from '@ioc:Adonis/Core/Event'
 import Route from '@ioc:Adonis/Core/Route'
 import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
@@ -36,3 +37,9 @@ Route.post('reset-password', 'AuthController.reset_password').middleware('auth')
 Route.post('get-authenticated-user', 'AuthController.get_authenticated_user').middleware('auth');
 Route.post('edit-data', 'UserController.edit_data').middleware('auth');
 Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth');
+
+Route.post('open-package', 'DrawController.open_package').middleware('auth');
+
+Event.on('db:query', function ({ sql, bindings }) {
+    console.log(sql, bindings)
+})
