@@ -7,25 +7,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Mysticker is ERC1155, Ownable
 {
-    string public baseURI;
-    string public notRevealedUri;
-    string public baseExtension = ".json";
-
-    bool public paused = true;
-    bool public revealed = false;
-
-    address private manager;
-
-    uint MAX_GOLD = 1;
-    uint MAX_SILVER = 10;
-    uint MAX_BRONZE = 100;
-
-    uint[] private gold_stickers = [1];
-    uint[] private silver_stickers = [];
-    uint[] private bronze_stickers = [];
-
-    mapping(uint256 => uint256) private amounts;
-    
     constructor() ERC1155("") {}
 
     modifier onlyManager
@@ -34,8 +15,77 @@ contract Mysticker is ERC1155, Ownable
         _;
     }
 
+    string public baseURI;
+    string public notRevealedUri;
+    string public baseExtension = ".json";
+
+    bool public paused = false;
+    bool public revealed = true;
+
+    address private manager;
+
+    uint MAX_GOLD = 1;
+    uint MAX_SILVER = 10;
+    uint MAX_BRONZE = 100;
+
+    uint[] private gold_stickers = [1];
+    uint[] private silver_stickers = [2];
+    uint[] private bronze_stickers = [3];
+
+    mapping(uint256 => uint256) private amounts;
+
+    mapping(address => uint256) private esmerald_package;
+    mapping(address => uint256) private obsidian_package;
+    mapping(address => uint256) private diamond_package;
+    
+    function withdraw() payable onlyOwner public {
+        payable(msg.sender).transfer(address(this).balance);
+    }
+
+    function getUserPackage(address _user) public view returns(uint256, uint256, uint256)
+    {
+        return (esmerald_package[_user], obsidian_package[_user], diamond_package[_user]);
+    }
+
+    function buyPackage(uint256 _package, uint256 amount) public payable
+    {
+        require(!paused, "Sale paused");
+        require(revealed, "Sale not revealed");
+        require(_package == 1 || _package == 2 || _package == 3, "Invalid package");
+        require(msg.value == (getPrice(_package) * amount), "Invalid price");
+
+        if(_package == 1)
+        {
+            esmerald_package[msg.sender] += amount;
+        }
+        else if(_package == 2)
+        {
+            obsidian_package[msg.sender] += amount;
+        }
+        else if(_package == 3)
+        {
+            diamond_package[msg.sender] += amount;
+        }
+    }
+
+    function getPrice(uint256 _package) public view returns (uint256 price)
+    {
+        if(_package == 1)
+        {
+            return 0.001 ether;
+        }
+        else if(_package == 2)
+        {
+            return 0.005 ether;
+        }
+        else if(_package == 3)
+        {
+            return 0.01 ether;
+        }
+    }
+
     // return Initial baseURI
-    function _baseURI() internal view virtual override returns (string memory) {
+    function _baseURI() internal view virtual returns (string memory) {
         return baseURI;
     }
 
@@ -151,10 +201,29 @@ contract Mysticker is ERC1155, Ownable
         manager = new_mmanager;
     }
 
-    function mint_stycker_pack(uint[] memory stickers, address sticker_owner) public onlyManager
+    function mint_stycker_pack(uint[] memory stickers, address sticker_owner, uint256 package_type, uint256 package_amount) public onlyManager
     {
-        uint[] memory amount = new uint[]();
-        uint[] memory _stickers = new uint[]();
+        require(package_type == 1 || package_type == 2 || package_type == 3, "Invalid package");
+        require(package_amount > 0, "Invalid package amount");
+
+        if(package_type == 1)
+        {
+            require(esmerald_package[sticker_owner] >= package_amount, "Not enough packages");
+            esmerald_package[sticker_owner] -= package_amount;
+        }
+        else if(package_type == 2)
+        {
+            require(obsidian_package[sticker_owner] >= package_amount, "Not enough packages");
+            obsidian_package[sticker_owner] -= package_amount;
+        }
+        else if(package_type == 3)
+        {
+            require(diamond_package[sticker_owner] >= package_amount, "Not enough packages");
+            diamond_package[sticker_owner] -= package_amount;
+        }
+
+        uint[] memory amount = new uint[](stickers.length);
+        uint[] memory _stickers = new uint[](stickers.length);
         for(uint i = 0; i < stickers.length; i++)
         {
             amount[i] = 1;
@@ -164,10 +233,29 @@ contract Mysticker is ERC1155, Ownable
         _mintBatch(sticker_owner, _stickers, amount, "");
     }
 
-    function mint_stycker_pack_owner(uint[] memory stickers, address sticker_owner) public onlyOwner
+    function mint_stycker_pack_owner(uint[] memory stickers, address sticker_owner, uint256 package_type, uint256 package_amount) public onlyOwner
     {
-        uint[] memory amount = new uint[]();
-        uint[] memory _stickers = new uint[]();
+        require(package_type == 1 || package_type == 2 || package_type == 3, "Invalid package");
+        require(package_amount > 0, "Invalid package amount");
+
+        if(package_type == 1)
+        {
+            require(esmerald_package[sticker_owner] >= package_amount, "Not enough packages");
+            esmerald_package[sticker_owner] -= package_amount;
+        }
+        else if(package_type == 2)
+        {
+            require(obsidian_package[sticker_owner] >= package_amount, "Not enough packages");
+            obsidian_package[sticker_owner] -= package_amount;
+        }
+        else if(package_type == 3)
+        {
+            require(diamond_package[sticker_owner] >= package_amount, "Not enough packages");
+            diamond_package[sticker_owner] -= package_amount;
+        }
+
+        uint[] memory amount = new uint[](stickers.length);
+        uint[] memory _stickers = new uint[](stickers.length);
         for(uint i = 0; i < stickers.length; i++)
         {
             amount[i] = 1;
