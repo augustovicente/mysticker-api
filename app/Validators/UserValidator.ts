@@ -24,17 +24,26 @@ export class EditUserValidator
 {
     constructor (protected ctx: HttpContextContract){}
 
+    public refs = schema.refs({
+        id: this.ctx.auth.user?.id,
+    });
+
     public schema = schema.create({
-        name: schema.string.optional({}, [rules.required()]),
+        name: schema.string.optional({}, []),
         email: schema.string.optional({}, [
+            rules.unique({
+                table: 'users',
+                column: 'email',
+                whereNot: { id: this.refs.id },
+            }),
             rules.email(),
-            rules.unique({ table: 'users', column: 'email' }),
+            rules.trim()
         ]),
-        cpf: schema.string.optional({}, []),
-        phone: schema.string.optional({}, []),
-        cep: schema.string.optional({}, []),
-        number: schema.string.optional({}, []),
-        complement: schema.string.optional({}, []),
+        cpf: schema.string.optional({}, [rules.trim()]),
+        phone: schema.string.optional({}, [rules.trim()]),
+        address_zip_code: schema.string.optional({}, [rules.trim()]),
+        address_number: schema.string.optional({}, [rules.trim()]),
+        address_complement: schema.string.optional({}, []),
     });
 
     public messages = validationMessage;

@@ -39,29 +39,29 @@ export default class UsersController
 
     public async edit_data ({ request, response, auth }: HttpContextContract)
     {
-        const { 
+        const {
             name,
             email,
-            cep,
-            complement,
-            number,
+            address_zip_code,
+            address_complement,
+            address_number,
             cpf,
             phone,
         } = await request.validate(EditUserValidator);
 
-        const user = await auth.authenticate();
+        // const user = await auth.authenticate();
 
-        await user.merge({
+        await auth.user!.merge({
             name,
             email,
-            address_zip_code: cep,
-            address_complement: complement,
-            address_number: number,
+            address_zip_code,
+            address_complement,
+            address_number,
             cpf,
             full_number: phone,
         }).save();
 
-        return response.ok({ 
+        return response.ok({
             message: 'User updated successfully',
             user: auth?.user,
         });
@@ -73,12 +73,12 @@ export default class UsersController
             , user = await auth.authenticate()
             , new_wallet = new Wallet();
 
-        new_wallet.merge({ 
+        new_wallet.merge({
             address: wallet,
             user_id: user.id,
         }).save();
 
-        return response.ok({ 
+        return response.ok({
             message: 'User updated successfully',
             user: auth?.user,
         });

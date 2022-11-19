@@ -92,13 +92,12 @@ export default class AuthController
     /**
      * @description Altera a senha do usuário logado
      */
-    public async reset_password ({ request, response, params }: HttpContextContract)
+    public async reset_password ({ request, response, auth }: HttpContextContract)
     {
         const { password } = await request.validate(ResetPasswordValidator)
-            , user = await User.findOrFail(params.id),
 
-            // Caso a senha seja igual a anterior será retornado um erro
-            isSamePassword = await Hash.verify(user.password, password);
+        // Caso a senha seja igual a anterior será retornado um erro
+        const isSamePassword = await Hash.verify(auth.user!.password, password);
 
         if (isSamePassword)
         {
@@ -109,7 +108,7 @@ export default class AuthController
         }
         else
         {
-            await user.merge({ password, email_verified: true }).save();
+            await auth.user!.merge({ password, email_verified: true }).save();
 
             return response.ok({ status: 'Password has been updated' });
         }
