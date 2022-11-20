@@ -1,7 +1,6 @@
 import { abi, contract_address } from "App/Solidity/contract";
 import { stickers } from "App/Solidity/stickers";
-import Web3 from 'web3';
-const web3 = new Web3("https://goerli.infura.io/v3/fee8917ab09e4e409ada6f602b288672");
+import { no_wallet_web3 } from "./Web3Service";
 export type Sticker = {
     id: number,
     name: string,
@@ -12,7 +11,7 @@ const get_available_stickers: (number) => Promise<number> = (id:number) =>
 {
     return new Promise((resolve, reject) =>
     {
-        const contract = new web3.eth.Contract(abi as any, contract_address);
+        const contract = new no_wallet_web3.eth.Contract(abi as any, contract_address);
         contract.methods.getAvailable(id).call().then((result) =>
         {
             resolve(result);
@@ -29,19 +28,6 @@ const get_bronze_stickers = async () =>
     let bronze_stickers:Sticker[] = [];
     for(const country of stickers)
     {
-        // a raridade do pais é bronze
-        let available = await get_available_stickers(country.id);
-        if(available > 0)
-        {
-            for(let index = 0; index < available; index++)
-            {
-                bronze_stickers.push({
-                    id: country.id,
-                    name: country.country,
-                    rarity: 3
-                });   
-            }
-        }
         // pegando os jogadores
         for(const player of country.players)
         {
@@ -122,8 +108,37 @@ const get_gold_stickers = async () =>
     return gold_stickers;
 }
 
+const check_if_has_all_from_country = async (country_id: number, user_address:string) =>
+{
+    let country_count:number = 0;
+    for(const country of stickers)
+    {
+        if(country.id === country_id)
+        {
+            for(const player of country.players)
+            {
+                const contract = new no_wallet_web3.eth.Contract(abi as any, contract_address);
+                const amount = await contract.methods.balanceOf(user_address, player.id).call()
+                if(amount > 0)
+                {
+                    country_count++;
+                }
+            }
+            if(country_count === country.players.length)
+            {
+                return country.players.map((player) => player.id);
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
+
 export {
     get_bronze_stickers,
     get_silver_stickers,
-    get_gold_stickers
+    get_gold_stickers,
+    check_if_has_all_from_country
 };

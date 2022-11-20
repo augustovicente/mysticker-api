@@ -39,6 +39,7 @@ Route.post('edit-data', 'UserController.edit_data').middleware('auth');
 Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth');
 
 Route.post('open-package', 'DrawController.open_package').middleware('auth');
+Route.post('paste-stickers', 'DrawController.paste_sticker').middleware('auth');
 
 Event.on('db:query', function ({ sql, bindings }) {
     console.log(sql, bindings)

@@ -14,3 +14,16 @@ export class OpenPackageValidator
     public messages = validationMessage;
     public cacheKey = this.ctx?.routeKey;
 }
+
+export class PasteStickerValidator
+{
+    constructor (protected ctx: HttpContextContract){}
+
+    public schema = schema.create({
+        country_id: schema.number([rules.required()]),
+        address: schema.string({}, [rules.required()]),
+    });
+
+    public messages = validationMessage;
+    public cacheKey = this.ctx?.routeKey;
+}

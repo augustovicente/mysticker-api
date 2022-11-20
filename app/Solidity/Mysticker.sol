@@ -86,6 +86,24 @@ contract Mysticker is ERC1155, Ownable
         }
     }
 
+    function managerGivePackage(uint256 _package, uint256 amount, address user_wallet) public onlyManager
+    {
+        require(_package == 1 || _package == 2 || _package == 3, "Invalid package");
+
+        if(_package == 1)
+        {
+            esmerald_package[user_wallet] += amount;
+        }
+        else if(_package == 2)
+        {
+            obsidian_package[user_wallet] += amount;
+        }
+        else if(_package == 3)
+        {
+            diamond_package[user_wallet] += amount;
+        }
+    }
+
     function getPrice(uint256 _package) public view returns (uint256 price)
     {
         if(_package == 1)
@@ -294,7 +312,7 @@ contract Mysticker is ERC1155, Ownable
         _mintBatch(_from, _mintIds, _mintAmounts, "");
     }
     
-    function burnForMint(
+    function manager_burnForMint(
         address _from,
         uint256[] memory _burnIds,
         uint256[] memory _burnAmounts,
