@@ -46,10 +46,8 @@ export default class UsersController
             address_complement,
             address_number,
             cpf,
-            phone,
+            full_number,
         } = await request.validate(EditUserValidator);
-
-        // const user = await auth.authenticate();
 
         await auth.user!.merge({
             name,
@@ -58,7 +56,7 @@ export default class UsersController
             address_complement,
             address_number,
             cpf,
-            full_number: phone,
+            full_number,
         }).save();
 
         return response.ok({

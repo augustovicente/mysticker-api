@@ -40,7 +40,7 @@ export class EditUserValidator
             rules.trim()
         ]),
         cpf: schema.string.optional({}, [rules.trim()]),
-        phone: schema.string.optional({}, [rules.trim()]),
+        full_number: schema.string.optional({}, [rules.trim()]),
         address_zip_code: schema.string.optional({}, [rules.trim()]),
         address_number: schema.string.optional({}, [rules.trim()]),
         address_complement: schema.string.optional({}, []),
