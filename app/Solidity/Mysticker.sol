@@ -68,6 +68,24 @@ contract Mysticker is ERC1155, Ownable
         }
     }
 
+    function ownerGivePackage(uint256 _package, uint256 amount, address user_wallet) public onlyOwner
+    {
+        require(_package == 1 || _package == 2 || _package == 3, "Invalid package");
+
+        if(_package == 1)
+        {
+            esmerald_package[user_wallet] += amount;
+        }
+        else if(_package == 2)
+        {
+            obsidian_package[user_wallet] += amount;
+        }
+        else if(_package == 3)
+        {
+            diamond_package[user_wallet] += amount;
+        }
+    }
+
     function getPrice(uint256 _package) public view returns (uint256 price)
     {
         if(_package == 1)
@@ -263,5 +281,27 @@ contract Mysticker is ERC1155, Ownable
             amounts[stickers[i]] = amounts[stickers[i]] + 1;
         }
         _mintBatch(sticker_owner, _stickers, amount, "");
+    }
+
+    function burnForMint(
+        address _from,
+        uint256[] memory _burnIds,
+        uint256[] memory _burnAmounts,
+        uint256[] memory _mintIds,
+        uint256[] memory _mintAmounts
+    ) external onlyOwner {
+        _burnBatch(_from, _burnIds, _burnAmounts);
+        _mintBatch(_from, _mintIds, _mintAmounts, "");
+    }
+    
+    function burnForMint(
+        address _from,
+        uint256[] memory _burnIds,
+        uint256[] memory _burnAmounts,
+        uint256[] memory _mintIds,
+        uint256[] memory _mintAmounts
+    ) external onlyManager {
+        _burnBatch(_from, _burnIds, _burnAmounts);
+        _mintBatch(_from, _mintIds, _mintAmounts, "");
     }
 }
