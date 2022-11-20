@@ -10,7 +10,6 @@ export default class DrawController
         const user = await auth.authenticate();
         const { address, package_type } = await request.validate(OpenPackageValidator);
         // check if wallet is vinculated
-        console.log(address, user.id);
         
         const wallet = await Wallet.query()
             .where('user_id', user.id)
@@ -20,9 +19,10 @@ export default class DrawController
         if(!!wallet)
         {
             let stickers_drawed = await draw_service(package_type as 1|2|3);
-            console.log(stickers_drawed);
 
-            let result = await mint_package(package_type as 1|2|3, address, stickers_drawed.map(sticker => sticker.id));
+            await mint_package(package_type as 1|2|3, address, stickers_drawed.map(sticker => sticker.id));
+
+            return response.status(200).send({ stickers_drawed });
         }
         else
         {
