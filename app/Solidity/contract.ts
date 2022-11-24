@@ -1,4 +1,4 @@
-export const contract_address = '0x37C6da9A7532f5496Bc8ef86074043A16DB86FE2';
+export const contract_address = '0x7472387Eb4F2e71613baecd6913fEeeBc04BEEc4';
 export const abi = [
 	{
 		"inputs": [
@@ -51,6 +51,57 @@ export const abi = [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256[]",
+				"name": "_ids",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_amounts",
+				"type": "uint256[]"
+			}
+		],
+		"name": "burnBatch",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_burnIds",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_burnAmounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_mintIds",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_mintAmounts",
+				"type": "uint256[]"
+			}
+		],
+		"name": "burnForMint",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "_package",
 				"type": "uint256"
@@ -88,6 +139,62 @@ export const abi = [
 			}
 		],
 		"name": "changeStateRevealed",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_burnIds",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_burnAmounts",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_mintIds",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_mintAmounts",
+				"type": "uint256[]"
+			}
+		],
+		"name": "manager_burnForMint",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_package",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "user_wallet",
+				"type": "address"
+			}
+		],
+		"name": "managerGivePackage",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -144,6 +251,29 @@ export const abi = [
 			}
 		],
 		"name": "mint_stycker_pack_owner",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_package",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "user_wallet",
+				"type": "address"
+			}
+		],
+		"name": "ownerGivePackage",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
