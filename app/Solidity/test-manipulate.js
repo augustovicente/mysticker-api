@@ -1,0 +1,2363 @@
+const fs = require('fs');
+
+let all_players = [
+	{
+		"NOME": "SAAD AL SHEEB",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 1,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PEDRO MIGUEL",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 2,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ABDULKARIM HASSAN",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 3,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "TAREK SALMAN",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 4,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ABDULAZIZ HATEM",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 5,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "HASAN AL-HAYDOS",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 6,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "AKRAM HASSAN AFIF",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 7,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "KARIM BOUDIAF",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 8,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "BASSAM ALRAWI",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 9,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BOUALEM KHOUKHI",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 10,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ALMOEZ ALI",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 11,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "QATAR",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 12,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "HERNÁN GALÍNDEZ",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 13,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "FÉLIX TORRES",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 14,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PIERO HINCAPIÉ",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 15,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PERVIS ESTUPIÑÁN",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 16,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "CARLOS GRUEZO",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 17,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ÁNGEL MENA",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 18,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MICHAEL ESTRADA",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 19,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ENNER VALENCIA",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 20,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ÁNGELO PRECIADO",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 21,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GONZALO PLATA",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 22,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MOISÉS CAICEDO",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 23,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "Equador",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 24,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SALIOU CISS",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 25,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KALIDOU KOULIBALY",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 26,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "IDRISSA GUEYE",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 27,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NAMPALYS MENDY",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 28,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CHEIKHOU KOUYATÉ",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 29,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BOULAYE DIA",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 30,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SADIO MANÉ",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 31,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ÉDOUARD MENDY",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 32,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ISMAILA SARR",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 33,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "BOUNA SARR",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 34,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ABDOU DIALLO",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 35,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "SENEGAL",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 36,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "JUSTIN BIJLOW",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 37,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MATTHIJS DE LIGT",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 38,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "VIRGIL VAN DIJK",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 39,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "STEFAN DE VRIJ",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 40,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "STEVEN BERGWIJN",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 41,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "GEORGINIO WIJNALDUM",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 42,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MEMPHIS DEPAY",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 43,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "DAVY KLAASSEN",
+		"NÚMERO DA CAMISA": 14,
+		"NÚMERO DA FIGURINHA": 44,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DALEY BLIND",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 45,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "FRENKIE DE JONG",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 46,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DENZEL DUMFRIES",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 47,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HOLANDA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 48,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "DECLAN RICE",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 49,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOHN STONES",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 50,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HARRY MAGUIRE",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 51,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "PHIL FODEN",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 52,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KALVIN PHILIPS",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 53,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HARRY KANE",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 54,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "RAHEEM STERLING",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 55,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "LUKE SHAW",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 56,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "KYLE WALKER",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 57,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MASON MOUNT",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 58,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JORDAN PICKFORD",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 59,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "INGLATERRA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 60,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ALIREZA BEIRANVAND",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 61,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SHOJA KHALIZADEH",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 62,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MILAD MOHAMMADI",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 63,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SAEID EZATOLAHI",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 64,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ALIREZA JAHANBAKHSH",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 65,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "AHMAD NOUROLLAHI",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 66,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MEHDI TAREMI",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 67,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HOSSEIN KANAANI",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 68,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ALI GHOLIZADEH",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 69,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "OMID NOORAFKAN",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 70,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SARDAR AZMOUN",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 71,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "IRAN",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 72,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MATT TURNER",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 73,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SERGIÑO DEST",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 74,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "WALKER ZIMMERMAN",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 75,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "TYLER ADAMS",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 76,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ANTONEE ROBINSON",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 77,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "DEANDRE YEDLIN",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 78,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GIOVANNI REYNA",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 79,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "WESTON MCKENNIE",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 80,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RICARDO PEPI",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 81,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CHRISTIAN PULISIC",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 82,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "TIMOTHY WEAH",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 83,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ESTADOS UNIDOS",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 84,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "WAYNE HENESSEY",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 85,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "NECO WILLIAMS",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 86,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BEM DAVIES",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 87,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOE RODON",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 88,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOE ALLEN",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 89,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "AARON RAMSEU",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 90,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "GARETH BALE",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 91,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "CONNOR ROBERTS",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 92,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KIEFFER MOORE",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 93,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ETHAN AMPADU",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 94,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DANIEL JAMES",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 95,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "PAÍS DE GALES",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 96,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "LEADRO PAREDES",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 97,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RODRIGO DE PAUL",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 98,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MARCOS ACUÑA",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 99,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "LIONEL MESSI",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 100,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ÁNGEL DI MARIA",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 101,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "CRISTIAN ROMERO",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 102,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "NICOLÁS OTAMENDI",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 103,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "GIOVANI LO CELSO",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 104,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "LAUTARO MARTÍNES",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 105,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "EMILIANO MARTÍNEZ",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 106,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "NAHUEL MOLINA",
+		"NÚMERO DA CAMISA": 26,
+		"NÚMERO DA FIGURINHA": 107,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ARGENTINA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 108,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SULTAN AL-GHANNAM",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 109,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ABDULLAH MADU",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 110,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ABDULELAH AL-AMRI",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 111,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SALMAN AL-FARAJ",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 112,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ABDULELAH AL-MALKI",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 113,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KHALID AL-GHANNAM",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 114,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "SALEM AL-DAWSARI",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 115,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YASSER AL-SHAHRANI",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 116,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MOHAMED AL-OWAIS",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 117,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HASSAN AL-TAMBAKTI",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 118,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MOHAMED KANINO",
+		"NÚMERO DA CAMISA": 25,
+		"NÚMERO DA FIGURINHA": 119,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ARÁBIA SAUDITA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 120,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "NÉSTOR ARAÚJO",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 121,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CÉSAR MONTES",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 122,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "EDSON ÁLVAREZ",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 123,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CARLOS RODRÍGUEZ",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 124,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RAÚL JIMÉNEZ",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 125,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "GUILLERMO OCHOA",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 126,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "HÉCTOR HERRERA",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 127,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "JESÚS MANUEL CORONA",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 128,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "HIRVING LOZANO",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 129,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JESÚS GALLARDO",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 130,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JORGE SÁNCHEZ",
+		"NÚMERO DA CAMISA": 26,
+		"NÚMERO DA FIGURINHA": 131,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MÉXICO",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 132,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "WOJCIECH SZCZESNY",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 133,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MATTY CASH",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 134,
+		"Tipo": ""
+	},
+	{
+		"NOME": "JAN BEDNAREK",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 135,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ARKADIUSZ MILIK",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 136,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ROBERT LEWANDOWSKI",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 137,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GZEGORZ KRYCHOWIAK",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 138,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "KAMIL GLIK",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 139,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "JAKUB MODER",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 140,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "BARTOSZ BERESZYNSKI",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 141,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PIOTR ZIELÑSKY",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 142,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KAMIL JÓZWIAK",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 143,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "POLÔNIA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 144,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "HUGO LLORIS",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 145,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "PRESNEL KIMPEMBE",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 146,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RAPHAEL VARANE",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 147,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JULES KOUNDÉ",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 148,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PAUL POGBA",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 149,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ANTOINE GRIEZMANN",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 150,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "KYLIAM MBAPPE",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 151,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "N'GOLO KANTÉ",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 152,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ADRIEN RABIOT",
+		"NÚMERO DA CAMISA": 14,
+		"NÚMERO DA FIGURINHA": 153,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KARIM BENZEMA",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 154,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "THEO HERNÁNDEZ",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 155,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "FRANÇA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 156,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MATHEW RYAN",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 157,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RHYAN GRANT",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 158,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MARTIN BOYLE",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 159,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MATTHEW LACKIE",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 160,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "AJDIN HRUSTIC",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 161,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "AARON MOOY",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 162,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MITCHELL DUKE",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 163,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "AZIZ BEHICH",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 164,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HARRY SOUTTAR",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 165,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "TRENT SAINSBURY",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 166,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JACKSON IRVINE",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 167,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "AUSTRÁLIA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 168,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "KASPER SCHMEICHEL",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 169,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "JANNIK BESTERGAARD",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 170,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "SIMON KJAER",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 171,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOAKIM MAEHLE",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 172,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ANDREAS CHRISTENSEN",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 173,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DANIEL WASS",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 174,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "THOMAS DELANEY",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 175,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MARTIN BRAITHWAITE",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 176,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "CHRISTIAN ERIKSEN",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 177,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YUSSUF POULSEN",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 178,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PIERRE EMILE",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 179,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DINAMARCA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 180,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MOTASSAR TALBI",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 181,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DYLAN BRONN",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 182,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "YOUSSEF MSAKNI",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 183,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "WAHBI KHAZRI",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 184,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SEIFEDDINE JAZIRI",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 185,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "AISSA LAIDOUNI",
+		"NÚMERO DA CAMISA": 14,
+		"NÚMERO DA FIGURINHA": 186,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ELLYES SKHIRI",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 187,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ANIS SLIMANE",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 188,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MOHAMED DRAGER",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 189,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BECHIR BEM SAID",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 190,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ALI MAALOUL",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 191,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "TUNÍSIA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 192,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "CÉSAR AZPILICUETA",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 193,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SERGIO BUSQUETS",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 194,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ÁLVARO MORATA",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 195,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GAVI",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 196,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "PEDRI",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 197,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "FERRAN TORRES",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 198,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ERIC GARCÍA",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 199,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "JORDI ALBA",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 200,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DANI OLMO",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 201,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "UNAI SIMÓN",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 202,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "AYMERIC LAPORTE",
+		"NÚMERO DA CAMISA": 24,
+		"NÚMERO DA FIGURINHA": 203,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ESPANHA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 204,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "KEYLOR NAVAS",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 205,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "KEYSHER FULLER",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 206,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CELSO BORGES",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 207,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ÓSCAR DUARTE",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 208,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ANTHONY CONTRERAS",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 209,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "BRYAN OVIEDO",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 210,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "JEWISON BENNETTE",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 211,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BRYAN RUIZ",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 212,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "JOEL CAMPBELL",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 213,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "FRANCISCO CALVO",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 214,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "YELTSIN TEJADA",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 215,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "COSTA RICA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 216,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MANUEL NEUER",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 217,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ANTONIO RUDIGER",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 218,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DAVID RAUM",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 219,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "THILO KEHRER",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 220,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOSHUA KIMMICH",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 221,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "KAI HAVERTZ",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 222,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "LEON GORETZKA",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 223,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "TIMO WERNER",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 224,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SERGE GNABRY",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 225,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "THOMAS MULLER",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 226,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "NIKLAS SULE",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 227,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ALEMANHA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 228,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YUTO NAGAMOTO",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 229,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "WATARU ENDO",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 230,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GAKU SHIBASAKI",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 231,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "TAKUMI MINAMINO",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 232,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SHUICHI GONDA",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 233,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MIKI YAMANE",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 234,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JUNYA ITO",
+		"NÚMERO DA CAMISA": 14,
+		"NÚMERO DA FIGURINHA": 235,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "YUYA OSAKO",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 236,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "TAKEHIRO TOMIYASU",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 237,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "AO TANAKA",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 238,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MAYA YOSHIDA",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 239,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JAPÃO",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 240,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "THIBAUT COUTOIS",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 241,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "TOBY ALDERWEIRELD",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 242,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JASON DENAYER",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 243,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JAN VERTONGHEN",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 244,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "AXEL WITSEL",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 245,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "KEVIN DE BRUYENE",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 246,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "YOURI TIELEMANS",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 247,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ROMELU LUKAKU",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 248,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "EDEN GAZARD",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 249,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YANNIC CARRASCO",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 250,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "THOMAS MEUNIER",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 251,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BÉLGICA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 252,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ALISTAIR JOHNSTON",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 253,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "KAMAL MILLER",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 254,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "STEVEN VITÓRIA",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 255,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "STEPHEN EUSTÁQUIO",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 256,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "TAJON BUCHANAN",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 257,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ATIBA HUTHINSON",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 258,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "CYLE LARIN",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 259,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MILAN BORJAN",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 260,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ALPHONSO DAVIES",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 261,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JONATHAN DAVID",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 262,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RICHIE LARYEA",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 263,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CANADÁ",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 264,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YASSINE BOUNOU",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 265,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ACHRAF HAKIMI",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 266,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ADAM MASINA",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 267,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SOFYAN AMRABAT",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 268,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NAYEF AGUERD",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 269,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ROMAIN SAISS",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 270,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "IMRAN LOUZA",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 271,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SELIM AMALLAH",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 272,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SOFIANE BOUFAL",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 273,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YOUSSEF ENESYRY",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 274,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RYAN MMAEE",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 275,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MARROCOS",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 276,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "DOMINIK LIVAKOVIC",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 277,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BORNA SOSA",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 278,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "IVAN PERISIC",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 279,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DEJAN LOVREN",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 280,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MATEO KOVACIC",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 281,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ANDDREJ KRAMARIC",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 282,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "LUKA MODRIC",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 283,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "MARCELO BROZOVIC",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 284,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "NIKOLA VLASIC",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 285,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOSKO GVARDIOL",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 286,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOSIP JURANOVIC",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 287,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CROÁCIA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 288,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ALISSON",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 289,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "DANILO",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 290,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "THIAGO SILVA",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 291,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MARQUINHOS",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 292,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CASEMIRO",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 293,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ALEX SANDRO",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 294,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "LUCAS PAQUETÁ",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 295,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "FRED",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 296,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GRABIEL JESUS",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 297,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NEYMAR JR",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 298,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "VINÍCIUS JR",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 299,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "BRASIL",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 300,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "STREHINJA PAVLOVIC",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 301,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NIKOMILENKOVIC",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 302,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MILOS VELJKOVIC",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 303,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "NEMANJA GUDELJ",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 304,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ALEKSANDAR MITROVIC",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 305,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DUSAN TADIC",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 306,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "PREDAG RAJKOVIC",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 307,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "FILIP KOSTIC",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 308,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "DUSAN VLAHOVIC",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 309,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SERGEJ MILINKKOVICSAVIC",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 310,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DARKO LAZOVIC",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 311,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SÉRVIA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 312,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YANN SOMMER",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 313,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SILVAN WIDMER",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 314,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NICO ELVEDI",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 315,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "MANUEL AKANJI",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 316,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "DENIS ZAKARIA",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 317,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "BREEL EMBOLO",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 318,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "REMO FREULER",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 319,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "HARIS SEFEROVIC",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 320,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GRANIT XHAKA",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 321,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "RICARDO RODRÍGUEZ",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 322,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "XHERDAN SHAQIRI",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 323,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SUIÇA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 324,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "COLLINS FAI",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 325,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NICOLAS MOUMI",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 326,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MICHAEL NGADEU",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 327,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ANDRÉ-FRANK ZAMBO",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 328,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "VICENT ABOUBAKAR",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 329,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "KARL TOKO EKAMBI",
+		"NÚMERO DA CAMISA": 12,
+		"NÚMERO DA FIGURINHA": 330,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ERIC MAXIM CHOUPOMITING",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 331,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "SAMUEL OUM GOUET",
+		"NÚMERO DA CAMISA": 14,
+		"NÚMERO DA FIGURINHA": 332,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "JEAN-CHARLES CASSTELLETO",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 333,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ANDRÉ ONANA",
+		"NÚMERO DA CAMISA": 24,
+		"NÚMERO DA FIGURINHA": 334,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "NOUHOU",
+		"NÚMERO DA CAMISA": 25,
+		"NÚMERO DA FIGURINHA": 335,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "CAMARÕES",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 336,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "PEPE",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 337,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RÚBEN DIAS",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 338,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "RAPHAEL GUERREIRO",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 339,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "CRISTIANO RONALDO",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 340,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "JOÃO MOUTINHO",
+		"NÚMERO DA CAMISA": 8,
+		"NÚMERO DA FIGURINHA": 341,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "BERNARDO SILVA",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 342,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "BRUNO FERNANDES",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 343,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "DANILO PEREIRA",
+		"NÚMERO DA CAMISA": 13,
+		"NÚMERO DA FIGURINHA": 344,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JÃO CANCELO",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 345,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DIOGO JOTA",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 346,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DIOGO COSTA",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 347,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "PORTUGAL",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 348,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ANRY YIIADOM",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 349,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "THOMAS PARTEY",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 350,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JORDAN AYEW",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 351,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "ANDRÉ AYEW",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 352,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "JOE WOLLACOTT",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 353,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "ABDUL-RAHMAN BABA",
+		"NÚMERO DA CAMISA": 17,
+		"NÚMERO DA FIGURINHA": 354,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "DANIEL AMARTEY",
+		"NÚMERO DA CAMISA": 18,
+		"NÚMERO DA FIGURINHA": 355,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MOHAMMED KUDUS",
+		"NÚMERO DA CAMISA": 20,
+		"NÚMERO DA FIGURINHA": 356,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "IDDRISU BABA",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 357,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "KAMALDEEN SULEMANA",
+		"NÚMERO DA CAMISA": 22,
+		"NÚMERO DA FIGURINHA": 358,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "ALEXANDER DJIKU",
+		"NÚMERO DA CAMISA": 23,
+		"NÚMERO DA FIGURINHA": 359,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "GANA",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 360,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "FERNANDO MUSLERA",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 361,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JOSÉ MARIA GIMÉNES",
+		"NÚMERO DA CAMISA": 2,
+		"NÚMERO DA FIGURINHA": 362,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "DIEGO GODÍN",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 363,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "RONALD ARAÚJO",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 364,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "RODRIGO BENTANCUR",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 365,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "NICOLÁS DE LA CRUS",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 366,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "LUIS SUARÉZ",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 367,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "GIORGIAN DE ARRASCAETA",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 368,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "FREDERICO VALVERD",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 369,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MATHÍAS OLIVEIRA",
+		"NÚMERO DA CAMISA": 16,
+		"NÚMERO DA FIGURINHA": 370,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "EDINSON CAVANI",
+		"NÚMERO DA CAMISA": 21,
+		"NÚMERO DA FIGURINHA": 371,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "URUGUAI",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 372,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "SEUNG-GYU KIM",
+		"NÚMERO DA CAMISA": 1,
+		"NÚMERO DA FIGURINHA": 373,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "JIN-SU KIM",
+		"NÚMERO DA CAMISA": 3,
+		"NÚMERO DA FIGURINHA": 374,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "MIN-JAE KIM",
+		"NÚMERO DA CAMISA": 4,
+		"NÚMERO DA FIGURINHA": 375,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "WOO-YOUNG JUNG",
+		"NÚMERO DA CAMISA": 5,
+		"NÚMERO DA FIGURINHA": 376,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "IN-BEO-HWANG",
+		"NÚMERO DA CAMISA": 6,
+		"NÚMERO DA FIGURINHA": 377,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "HEUGMIN-SON",
+		"NÚMERO DA CAMISA": 7,
+		"NÚMERO DA FIGURINHA": 378,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "YOUNG LEE",
+		"NÚMERO DA CAMISA": 9,
+		"NÚMERO DA FIGURINHA": 379,
+		"Tipo": "PRATA"
+	},
+	{
+		"NOME": "JAE-SUNG LEE",
+		"NÚMERO DA CAMISA": 10,
+		"NÚMERO DA FIGURINHA": 380,
+		"Tipo": "OURO"
+	},
+	{
+		"NOME": "HEE-CHAN-HWANG",
+		"NÚMERO DA CAMISA": 11,
+		"NÚMERO DA FIGURINHA": 381,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "UI-JO-HWANG",
+		"NÚMERO DA CAMISA": 15,
+		"NÚMERO DA FIGURINHA": 382,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "YOUNG-GWON KIM",
+		"NÚMERO DA CAMISA": 19,
+		"NÚMERO DA FIGURINHA": 383,
+		"Tipo": "BRONZE"
+	},
+	{
+		"NOME": "COREIA DO SUL",
+		"NÚMERO DA CAMISA": "",
+		"NÚMERO DA FIGURINHA": 384,
+		"Tipo": "OURO"
+	}
+]
+
+/* let mystickers = [];
+
+let current_country = 0;
+for (const player of all_players.reverse())
+{
+	if(player["NÚMERO DA CAMISA"] === "")
+	{
+		let sticker = {
+			id: +player["NÚMERO DA FIGURINHA"],
+			country: player["NOME"].toUpperCase(),
+			players: []
+		}
+		mystickers.push(sticker);
+		current_country = mystickers.length - 1;
+	}
+	else
+	{
+		let sticker = {
+			id: +player["NÚMERO DA FIGURINHA"],
+			name: player["NOME"].toUpperCase(),
+			rarity: player["Tipo"] === "OURO" 
+				? 1 
+				: player["Tipo"] === "PRATA" 
+					? 2 
+					: 3,
+		}
+		mystickers[current_country].players.push(sticker);
+	}
+}
+
+// save to file
+fs.writeFileSync("mystickers.json", JSON.stringify(mystickers)); */
+
+/* let gold = [], silver = [], bronze = [];
+for(const sticker of all_players)
+{
+    switch(sticker["Tipo"])
+    {
+        case "OURO":
+            gold.push(+sticker["NÚMERO DA FIGURINHA"]);
+            break;
+        case "PRATA":
+            silver.push(+sticker["NÚMERO DA FIGURINHA"]);
+            break;
+        case "BRONZE":
+            bronze.push(+sticker["NÚMERO DA FIGURINHA"]);
+            break;
+    }
+}
+fs.writeFileSync("contract.json", JSON.stringify({
+    gold,
+    silver,
+    bronze
+})); */
