@@ -5,7 +5,6 @@ import { GenerateValidationCode } from 'App/Services/Utils';
 import { EditUserValidator, RegisterUserValidator, WalletValidator } from 'App/Validators/UserValidator';
 import { DateTime } from 'luxon';
 import Env from '@ioc:Adonis/Core/Env';
-import Wallet from 'App/Models/Wallet';
 
 export default class UsersController
 {
