@@ -130,6 +130,17 @@ contract Mysticker is ERC1155, Ownable
         baseURI = _newBaseURI;
     }
 
+    function uri(uint256 _tokenid) override public view returns (string memory)
+    {
+        return string(
+            abi.encodePacked(
+                baseURI,
+                Strings.toString(_tokenid),
+                baseExtension
+            )
+        );
+    }
+
     // set notRevealedURI
     function setNotRevealedURI(string memory _notRevealedURI) public onlyOwner {
         notRevealedUri = _notRevealedURI;

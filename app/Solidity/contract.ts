@@ -1,4 +1,4 @@
-export const contract_address = '0x7472387Eb4F2e71613baecd6913fEeeBc04BEEc4';
+export const contract_address = '0x9EFF5AC83b26Ea27BD1457b3e546E1bcEc767eE3';
 export const abi = [
 	{
 		"inputs": [
@@ -849,7 +849,7 @@ export const abi = [
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "_tokenid",
 				"type": "uint256"
 			}
 		],
