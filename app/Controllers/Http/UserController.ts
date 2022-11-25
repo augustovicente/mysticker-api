@@ -67,18 +67,33 @@ export default class UsersController
 
     public async vinculate_wallet ({ request, response, auth }: HttpContextContract)
     {
-        const { wallet } = await request.validate(WalletValidator)
-            , user = await auth.authenticate()
-            , new_wallet = new Wallet();
+        const { wallet } = await request.validate(WalletValidator);
 
-        new_wallet.merge({
-            address: wallet,
-            user_id: user.id,
-        }).save();
+        const alreadyVinculated = await auth.user!
+            .related('wallets')
+            .query()
+            .select('id')
+            .where('address', wallet)
+            .first();
 
-        return response.ok({
-            message: 'User updated successfully',
-            user: auth?.user,
-        });
+        if (alreadyVinculated?.id) {
+            return response.ok({
+                message: 'Wallet already vinculated',
+            });
+        }
+
+        try {
+            await auth.user!.related('wallets').firstOrCreate({
+                address: wallet,
+            });
+
+            return response.ok({
+                message: 'Wallet vinculated successfully'
+            });
+        } catch (error) {
+            return response.internalServerError({
+                message: 'Error vinculating wallet',
+            })
+        }
     }
 }
