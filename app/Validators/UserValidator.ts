@@ -55,7 +55,7 @@ export class WalletValidator
     constructor (protected ctx: HttpContextContract){}
 
     public schema = schema.create({
-        wallet: schema.string.optional({}, [rules.required()]),
+        wallet: schema.string({}, [rules.required()]),
     });
 
     public messages = validationMessage;
