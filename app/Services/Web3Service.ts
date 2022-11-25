@@ -1,4 +1,5 @@
 import HDWalletProvider from '@truffle/hdwallet-provider';
+import NonceTrackerSubprovider from "web3-provider-engine/subproviders/nonce-tracker";
 import Web3 from 'web3';
 import Env from '@ioc:Adonis/Core/Env';
 import { abi, contract_address } from 'App/Solidity/contract';
@@ -7,6 +8,10 @@ const provider = new HDWalletProvider(
     Env.get('WALLET_WORDS'),
     "https://goerli.infura.io/v3/fee8917ab09e4e409ada6f602b288672"
 );
+const nonceTracker = new NonceTrackerSubprovider()
+provider.engine._providers.unshift(nonceTracker)
+nonceTracker.setEngine(provider.engine)
+
 const web3 = new Web3(provider);
 const contract = new web3.eth.Contract(abi as any, contract_address);
 const no_wallet_web3 = new Web3("https://goerli.infura.io/v3/fee8917ab09e4e409ada6f602b288672");
