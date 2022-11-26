@@ -19,9 +19,14 @@ const no_wallet_web3 = new Web3("https://goerli.infura.io/v3/fee8917ab09e4e409ad
 const mint_package = async (pack_type: 1|2|3, address: string, stickers:number[]) =>
 {
     const {1: contract_account} = await web3.eth.getAccounts();
+    const accountNonce = '0x' + ((await web3.eth.getTransactionCount(contract_address)) + 1).toString(16)
+
     // mintando nfts
     return await contract.methods.mint_stycker_pack(stickers, address, pack_type, 1)
-        .send({ from: contract_account})
+        .send({ 
+            from: contract_account,
+            nonce: accountNonce,
+        })
 }
 
 const burn_for_mint = async (stickers_to_burn: number[], address: string, stickers_to_mint:number[]) =>
