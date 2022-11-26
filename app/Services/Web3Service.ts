@@ -29,14 +29,10 @@ const burn_for_mint = async (stickers_to_burn: number[], address: string, sticke
     const {1: contract_account} = await web3.eth.getAccounts();
     let amounts_burn = stickers_to_burn.map(() => 1);
     let amounts_mint = stickers_to_mint.map(() => 1);
-    const accountNonce ='0x' + (await web3.eth.getTransactionCount(contract_account) + 1).toString(16)
     // mintando nfts
     return await contract.methods
         .manager_burnForMint(address, stickers_to_burn, amounts_burn, stickers_to_mint, amounts_mint)
-        .send({
-            nonce: accountNonce,
-            from: contract_account
-        })
+        .send({ from: contract_account })
 }
 
 export {
