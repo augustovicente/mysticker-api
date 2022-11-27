@@ -9,6 +9,7 @@ export class OpenPackageValidator
     public schema = schema.create({
         address: schema.string({}, [rules.required()]),
         package_type: schema.number([rules.required()]),
+        amount: schema.number([rules.required()]),
     });
 
     public messages = validationMessage;

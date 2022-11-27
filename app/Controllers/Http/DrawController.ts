@@ -1,7 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Wallet from 'App/Models/Wallet';
 import { draw_service } from 'App/Services/DrawService';
-import { check_if_has_all_from_country } from 'App/Services/StickerService';
+import { check_if_has_all_from_country, Sticker } from 'App/Services/StickerService';
 import { burn_for_mint, mint_package } from 'App/Services/Web3Service';
 import { OpenPackageValidator, PasteStickerValidator } from 'App/Validators/DrawValidator';
 export default class DrawController
@@ -9,7 +9,7 @@ export default class DrawController
     public async open_package ({ auth, request, response }: HttpContextContract)
     {
         const user = await auth.authenticate();
-        const { address, package_type } = await request.validate(OpenPackageValidator);
+        const { address, package_type, amount } = await request.validate(OpenPackageValidator);
         // check if wallet is vinculated
         
         const wallet = await Wallet.query()
@@ -19,9 +19,17 @@ export default class DrawController
         
         if(!!wallet)
         {
-            let stickers_drawed = await draw_service(package_type as 1|2|3);
+            let stickers_drawed:Sticker[] = [];
+            for(let i = 0; i < amount; i++)
+            {
+                let the_draw = await draw_service(package_type as 1|2|3);
+                stickers_drawed = [
+                    ...stickers_drawed,
+                    ...the_draw
+                ];
+            }
 
-            await mint_package(package_type as 1|2|3, address, stickers_drawed.map(sticker => sticker.id));
+            await mint_package(package_type as 1|2|3, address, stickers_drawed.map(sticker => sticker.id), amount);
 
             return response.status(200).send({ stickers_drawed });
         }
