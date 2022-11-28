@@ -7,12 +7,12 @@ export type Sticker = {
     rarity: number,
 };
 // contract get available stickers
-const get_available_stickers: (number) => Promise<number> = (id:number) =>
+const get_available_stickers_batch: (ids:number[]) => Promise<number[]> = (ids:number[]) =>
 {
     return new Promise((resolve, reject) =>
     {
         const contract = new no_wallet_web3.eth.Contract(abi as any, contract_address);
-        contract.methods.getAvailable(id).call().then((result) =>
+        contract.methods.getAvailableBatch(ids).call().then((result) =>
         {
             resolve(result);
         })
@@ -22,90 +22,89 @@ const get_available_stickers: (number) => Promise<number> = (id:number) =>
         });
     });
 }
-// get the stickers
-const get_bronze_stickers = async () =>
+// get all stickers
+const get_all_stickers = async () =>
 {
-    let bronze_stickers:Sticker[] = [];
+    let all_stickers:any = {
+        bronze: [],
+        silver: [],
+        gold: []
+    };
+    let all_stickers_return:any = {
+        bronze: [],
+        silver: [],
+        gold: []
+    };
     for(const country of stickers)
     {
         // pegando os jogadores
         for(const player of country.players)
         {
-            if(player.rarity === 3)
+            switch(player.rarity)
             {
-                let _available = await get_available_stickers(player.id);
-                if(_available > 0)
-                {
-                    for(let index = 0; index < _available; index++)
-                    {
-                        bronze_stickers.push({
-                            id: player.id,
-                            name: player.name,
-                            rarity: player.rarity
-                        });
-                    }
-                }
+                case 3:
+                    all_stickers.bronze.push({
+                        id: player.id,
+                        name: player.name,
+                        rarity: player.rarity
+                    });
+                    break;
+                case 2:
+                    all_stickers.silver.push({
+                        id: player.id,
+                        name: player.name,
+                        rarity: player.rarity
+                    });
+                    break;
+                case 1:
+                    all_stickers.gold.push({
+                        id: player.id,
+                        name: player.name,
+                        rarity: player.rarity
+                    });
+                    break;
             }
         }
     }
 
-    return bronze_stickers;
-};
-const get_silver_stickers = async () =>
-{
-    let silver_stickers:Sticker[] = [];
-    for(const country of stickers)
+    let available_broze = await get_available_stickers_batch(all_stickers.bronze.map((sticker) => sticker.id));
+    let available_silver = await get_available_stickers_batch(all_stickers.silver.map((sticker) => sticker.id));
+    let available_gold = await get_available_stickers_batch(all_stickers.gold.map((sticker) => sticker.id));
+    
+    for (const [_i, available] of available_broze.entries())
     {
-        // pegando os jogadores
-        for(const player of country.players)
+        if(available > 0)
         {
-            if(player.rarity === 2)
+            for(let index = 0; index < available; index++)
             {
-                let _available = await get_available_stickers(player.id);
-                if(_available > 0)
-                {
-                    for(let index = 0; index < _available; index++)
-                    {
-                        silver_stickers.push({
-                            id: player.id,
-                            name: player.name,
-                            rarity: player.rarity
-                        });
-                    }
-                }
+                all_stickers_return.bronze.push(all_stickers.bronze[_i]);
             }
         }
     }
 
-    return silver_stickers;
-};
-const get_gold_stickers = async () =>
-{
-    let gold_stickers:Sticker[] = [];
-    for(const country of stickers)
+    for (const [_i, available] of available_silver.entries())
     {
-        // pegando os jogadores
-        for(const player of country.players)
+        if(available > 0)
         {
-            if(player.rarity === 1)
+            for(let index = 0; index < available; index++)
             {
-                let _available = await get_available_stickers(player.id);
-                if(_available > 0)
-                {
-                    for(let index = 0; index < _available; index++)
-                    {
-                        gold_stickers.push({
-                            id: player.id,
-                            name: player.name,
-                            rarity: player.rarity
-                        });
-                    }
-                }
+                all_stickers_return.silver.push(all_stickers.silver[_i]);
             }
         }
     }
 
-    return gold_stickers;
+    for (const [_i, available] of available_gold.entries())
+    {
+        if(available > 0)
+        {
+            for(let index = 0; index < available; index++)
+            {
+                all_stickers_return.gold.push(all_stickers.gold[_i]);
+            }
+        }
+    }
+
+    return all_stickers_return;
 }
 
 const check_if_has_all_from_country = async (country_id: number, user_address:string) =>
@@ -137,8 +136,6 @@ const check_if_has_all_from_country = async (country_id: number, user_address:st
 }
 
 export {
-    get_bronze_stickers,
-    get_silver_stickers,
-    get_gold_stickers,
-    check_if_has_all_from_country
+    check_if_has_all_from_country,
+    get_all_stickers
 };

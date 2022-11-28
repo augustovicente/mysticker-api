@@ -242,10 +242,20 @@ contract Mysticker is ERC1155, Ownable
             return MAX_BRONZE - minted_amount;
         }
     }
-
-    function setManager(address new_mmanager) public onlyOwner
+    
+    function getAvailableBatch(uint[] memory _id) public view returns (uint[] memory available)
     {
-        manager = new_mmanager;
+        uint[] memory available_stickers = new uint[](_id.length);
+        for (uint i = 0; i < _id.length; i++)
+        {
+            available_stickers[i] = getAvailable(_id[i]);
+        }
+        return available_stickers;
+    }
+
+    function setManager(address new_manager) public onlyOwner
+    {
+        manager = new_manager;
     }
 
     function mint_stycker_pack(uint[] memory stickers, address sticker_owner, uint256 package_type, uint256 package_amount) public onlyManager

@@ -1,5 +1,5 @@
 const Urn = require('js-random-urn-draw');
-import { Sticker, get_bronze_stickers, get_gold_stickers, get_silver_stickers } from './StickerService';
+import { Sticker, get_all_stickers } from './StickerService';
 
 type probabilities = {
     bronze: number,
@@ -45,9 +45,10 @@ export const draw_service = async (pack_type: 1|2|3) =>
     // probability of each sticker
     const probabilities = get_probabilities(pack_type);
 
-    let available_bronze_stickers = await get_bronze_stickers();
-    let available_silver_stickers:any[] = await get_silver_stickers();
-    let available_gold_stickers:any[] = await get_gold_stickers();
+    let all_stickers_available:any = await get_all_stickers();
+    let available_bronze_stickers = all_stickers_available.bronze;
+    let available_silver_stickers:any[] = all_stickers_available.silver;
+    let available_gold_stickers:any[] = all_stickers_available.gold;
     
     // check if there is enough bronze
     if(available_bronze_stickers.length < (total_stickers * probabilities.bronze))
