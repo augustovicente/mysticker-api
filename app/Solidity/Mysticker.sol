@@ -108,15 +108,15 @@ contract Mysticker is ERC1155, Ownable
     {
         if(_package == 1)
         {
-            return 0.001 ether;
+            return 1 ether;
         }
         else if(_package == 2)
         {
-            return 0.005 ether;
+            return 5 ether;
         }
         else if(_package == 3)
         {
-            return 0.01 ether;
+            return 10 ether;
         }
     }
 
