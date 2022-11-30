@@ -104,7 +104,7 @@ contract Mysticker is ERC1155, Ownable
         }
     }
 
-    function getPrice(uint256 _package) public view returns (uint256 price)
+    function getPrice(uint256 _package) public pure returns (uint256 price)
     {
         if(_package == 1)
         {
