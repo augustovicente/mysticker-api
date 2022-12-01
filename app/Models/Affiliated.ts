@@ -11,6 +11,9 @@ export default class Affiliated extends BaseModel {
     @column()
     public code: string
 
+    @column()
+    public percentage: number
+
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
     

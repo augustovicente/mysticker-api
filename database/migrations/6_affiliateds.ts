@@ -9,6 +9,8 @@ export default class Affiliateds extends BaseSchema {
 
             table.string('name').notNullable()
             table.string('code').notNullable().unique()
+            table.float('percentage').notNullable()
+            
             table.timestamps(true)
         })
     }
