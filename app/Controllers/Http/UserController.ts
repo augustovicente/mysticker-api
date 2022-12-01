@@ -148,7 +148,7 @@ export default class UsersController
         const has_wallet = await Wallet.query()
             .where('user_id', user.id)
             .andWhere('address', wallet)
-            .firstOrFail();
+            .first();
 
         if(!has_wallet)
         {
@@ -161,7 +161,7 @@ export default class UsersController
         const has_redeem = await Prize.query()
             .where('user_id', user.id)
             .andWhere('type', type)
-            .firstOrFail();
+            .first();
 
         if(has_redeem)
         {
@@ -233,27 +233,36 @@ export default class UsersController
         const user = await auth.authenticate();
         const { hash, wallet } = await request.validate(BuyPackageValidator);
 
-        // check if user has this wallet
-        const has_wallet = await Wallet.query()
-            .where('user_id', user.id)
-            .andWhere('address', wallet)
-            .firstOrFail();
-
-        if(!has_wallet)
-        {
-            return response.badRequest({
-                message: 'Wallet not vinculated to this user',
+        try {
+            
+            // check if user has this wallet
+            const has_wallet = await Wallet.query()
+                .where('user_id', user.id)
+                .andWhere('address', wallet)
+                .first();
+    
+            if(!has_wallet)
+            {
+                return response.badRequest({
+                    message: 'Wallet not vinculated to this user',
+                });
+            }
+    
+            // salvando a compra
+            await PackageBuy.create({
+                user_id: user.id,
+                hash_transaction: hash,
+            });
+    
+            return response.ok({
+                message: 'Package buy saved successfully',
             });
         }
-
-        // salvando a compra
-        await PackageBuy.create({
-            user_id: user.id,
-            hash_transaction: hash,
-        });
-
-        return response.ok({
-            message: 'Package buy saved successfully',
-        });
+        catch (error)
+        {
+            return response.internalServerError({
+                message: 'Error saving package buy',
+            });
+        }
     }
 }
