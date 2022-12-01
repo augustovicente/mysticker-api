@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import ValidationCode from './ValidationCode'
 import Wallet from './Wallet'
 import Hash from '@ioc:Adonis/Core/Hash';
+import Affiliated from './Affiliated';
 
 export default class User extends BaseModel {
     @column({ isPrimary: true })
@@ -35,6 +36,9 @@ export default class User extends BaseModel {
     @column()
     public email_verified: boolean
 
+    @column()
+    public affiliated_id?: number
+
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 
@@ -46,6 +50,9 @@ export default class User extends BaseModel {
 
     @hasMany(() => Wallet, { localKey: 'id', foreignKey: 'user_id' })
     public wallets: HasMany<typeof Wallet>;
+
+    @belongsTo(() => Affiliated, { localKey: 'affiliated_id', foreignKey: 'id' })
+    public wallet: BelongsTo<typeof Affiliated>;
 
     @beforeSave()
     public static async hashPassword (user: User)
