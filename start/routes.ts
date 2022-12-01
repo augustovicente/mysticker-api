@@ -41,6 +41,11 @@ Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('au
 Route.post('open-package', 'DrawController.open_package').middleware('auth');
 Route.post('paste-stickers', 'DrawController.paste_sticker').middleware('auth');
 
+Route.post('has-redeem/:prize_type', 'UserController.has_redeem').middleware('auth');
+Route.post('redeem', 'UserController.redeem').middleware('auth');
+
+Route.post('buy-package', 'UserController.buy_package').middleware('auth');
+
 Event.on('db:query', function ({ sql, bindings }) {
     console.log(sql, bindings)
 })

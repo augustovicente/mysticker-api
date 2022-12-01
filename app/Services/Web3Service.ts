@@ -36,8 +36,19 @@ const burn_for_mint = async (stickers_to_burn: number[], address: string, sticke
         .send({ from: contract_account })
 }
 
+const get_sticker_balance = async (address: string, sticker_ids: number[]) =>
+{
+    return await contract.methods
+        .balanceOfBatch(
+            sticker_ids.map(() => address), 
+            sticker_ids
+        )
+        .call();
+}
+
 export {
     no_wallet_web3,
     burn_for_mint,
     mint_package,
+    get_sticker_balance,
 }

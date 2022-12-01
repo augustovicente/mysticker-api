@@ -14,6 +14,7 @@ export class RegisterUserValidator
             rules.email(),
         ]),
         password: schema.string([rules.required()]),
+        affiliate_code: schema.string.optional(),
     });
 
     public messages = validationMessage;
@@ -56,6 +57,36 @@ export class WalletValidator
 
     public schema = schema.create({
         wallet: schema.string({}, [rules.required()]),
+    });
+
+    public messages = validationMessage;
+    public cacheKey = this.ctx?.routeKey;
+}
+
+export class RedeemValidator
+{
+    constructor (protected ctx: HttpContextContract){}
+
+    public schema = schema.create({
+        wallet: schema.string({}, [rules.required()]),
+        type: schema.number([
+            rules.required(),
+            rules.range(1, 6),
+        ]),
+        size: schema.number([rules.required()]),
+    });
+
+    public messages = validationMessage;
+    public cacheKey = this.ctx?.routeKey;
+}
+
+export class BuyPackageValidator
+{
+    constructor (protected ctx: HttpContextContract){}
+
+    public schema = schema.create({
+        wallet: schema.string({}, [rules.required()]),
+        hash: schema.string([rules.required()]),
     });
 
     public messages = validationMessage;
