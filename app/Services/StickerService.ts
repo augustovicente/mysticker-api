@@ -75,7 +75,8 @@ const get_all_stickers = async () =>
     {
         if(available > 0)
         {
-            for(let index = 0; index < available; index++)
+            let _for = (available > 200) ? 200 :available;
+            for(let index = 0; index < _for; index++)
             {
                 all_stickers_return.bronze.push(all_stickers.bronze[_i]);
             }
@@ -86,7 +87,8 @@ const get_all_stickers = async () =>
     {
         if(available > 0)
         {
-            for(let index = 0; index < available; index++)
+            let _for = (available > 80) ? 80 :available;
+            for(let index = 0; index < _for; index++)
             {
                 all_stickers_return.silver.push(all_stickers.silver[_i]);
             }
@@ -97,7 +99,8 @@ const get_all_stickers = async () =>
     {
         if(available > 0)
         {
-            for(let index = 0; index < available; index++)
+            let _for = (available > 40) ? 40 :available;
+            for(let index = 0; index < _for; index++)
             {
                 all_stickers_return.gold.push(all_stickers.gold[_i]);
             }

@@ -40,7 +40,7 @@ const get_sticker_balance = async (address: string, sticker_ids: number[]) =>
 {
     return await contract.methods
         .balanceOfBatch(
-            sticker_ids.map(() => address), 
+            sticker_ids.map(() => address),
             sticker_ids
         )
         .call();
