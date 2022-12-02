@@ -146,6 +146,7 @@ export default class UsersController
 
         // check if user has this wallet
         const has_wallet = await Wallet.query()
+            .select('id')
             .where('user_id', user.id)
             .andWhere('address', wallet)
             .first();
@@ -159,6 +160,7 @@ export default class UsersController
 
         // check if user has already redeemed this prize
         const has_redeem = await Prize.query()
+            .select('id')
             .where('user_id', user.id)
             .andWhere('type', type)
             .first();
@@ -217,8 +219,9 @@ export default class UsersController
             user_id: user.id,
             type,
             size,
+            redeem_info: 'Solicitado',
             wallet_id: has_wallet.id,
-            redeem_status: 1,
+            redeem_status: 1, // 1 processing - 2 sent
             redeem_last_update: DateTime.now(),
         });
 
@@ -234,26 +237,26 @@ export default class UsersController
         const { hash, wallet } = await request.validate(BuyPackageValidator);
 
         try {
-            
+
             // check if user has this wallet
             const has_wallet = await Wallet.query()
                 .where('user_id', user.id)
                 .andWhere('address', wallet)
                 .first();
-    
+
             if(!has_wallet)
             {
                 return response.badRequest({
                     message: 'Wallet not vinculated to this user',
                 });
             }
-    
+
             // salvando a compra
             await PackageBuy.create({
                 user_id: user.id,
                 hash_transaction: hash,
             });
-    
+
             return response.ok({
                 message: 'Package buy saved successfully',
             });
