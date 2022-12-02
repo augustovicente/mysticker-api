@@ -114,7 +114,8 @@ export default class UsersController
 
     public async has_redeem ({ params, response, auth }: HttpContextContract)
     {
-        const prize_type = params.prize_type;
+        const prize_type = Number(params.prize_type);
+
         if(![1,2,3,4,5,6].includes(prize_type))
         {
             return response.badRequest({
