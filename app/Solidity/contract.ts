@@ -1,5 +1,5 @@
-export const contract_address = '0x154755cc4B3193405965Af4aa41a5Ea479Bbde9B';
-// export const contract_address = '0x77c551dC1159460F5028a4b132a379F5fCa9d3F5';
+// export const contract_address = '0x154755cc4B3193405965Af4aa41a5Ea479Bbde9B';
+export const contract_address = '0x77c551dC1159460F5028a4b132a379F5fCa9d3F5';
 export const abi = [
 	{
 		"inputs": [],
