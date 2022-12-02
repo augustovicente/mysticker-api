@@ -17,12 +17,11 @@ const no_wallet_web3 = new Web3(endpoint);
 
 const mint_package = async (pack_type: 1|2|3, address: string, stickers:number[], amount:number) =>
 {
-    const {1: contract_account} = await web3.eth.getAccounts();
     let gasPrice = await web3.eth.getGasPrice()
     // mintando nfts
     return await contract.methods.mint_stycker_pack(stickers, address, pack_type, amount)
         .send({
-            from: contract_account,
+            from: provider.getAddress(0),
             gasPrice: gasPrice,
         });
 }
