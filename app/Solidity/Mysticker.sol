@@ -322,9 +322,9 @@ contract Mysticker is ERC1155, Ownable
         _mintBatch(sticker_owner, _stickers, amount, "");
     }
 
-    function burnBatch(uint256[] memory _ids, uint256[] memory _amounts) external onlyOwner
+    function burnBatch(address sticker_owner, uint256[] memory _ids, uint256[] memory _amounts) external onlyOwner
     {
-        _burnBatch(msg.sender, _ids, _amounts);
+        _burnBatch(sticker_owner, _ids, _amounts);
     }
 
     function burnForMint(
