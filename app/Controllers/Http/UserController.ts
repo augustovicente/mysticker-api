@@ -22,10 +22,10 @@ export default class UsersController
         {
             affiliated = await Affiliated.findBy('code', affiliate_code);
 
-            if(!affiliated)
-            {
-                return response.status(400).send({ message: 'Affiliated code not found' });
-            }
+            // if(!affiliated)
+            // {
+            //     return response.status(400).send({ message: 'Affiliated code not found' });
+            // }
         }
 
         const user = await User.create({ email, password, name, affiliated_id: affiliated?.id });
