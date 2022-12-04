@@ -28,13 +28,16 @@ const mint_package = async (pack_type: 1|2|3, address: string, stickers:number[]
 
 const burn_for_mint = async (stickers_to_burn: number[], address: string, stickers_to_mint:number[]) =>
 {
-    const {1: contract_account} = await web3.eth.getAccounts();
     let amounts_burn = stickers_to_burn.map(() => 1);
     let amounts_mint = stickers_to_mint.map(() => 1);
+    let gasPrice = await web3.eth.getGasPrice()
     // mintando nfts
     return await contract.methods
         .manager_burnForMint(address, stickers_to_burn, amounts_burn, stickers_to_mint, amounts_mint)
-        .send({ from: contract_account })
+        .send({
+            from: provider.getAddress(0),
+            gasPrice: gasPrice,
+        })
 }
 
 const get_sticker_balance = async (address: string, sticker_ids: number[]) =>
