@@ -442,8 +442,8 @@ export const stickers = [
             },
             {
                 "id": 297,
-                "name": "GRABIEL JESUS",
-                "rarity": 3
+                "name": "RICHARLISON",
+                "rarity": 2
             },
             {
                 "id": 296,
@@ -453,7 +453,7 @@ export const stickers = [
             {
                 "id": 295,
                 "name": "LUCAS PAQUETÁ",
-                "rarity": 2
+                "rarity": 3
             },
             {
                 "id": 294,
