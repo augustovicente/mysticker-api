@@ -37,7 +37,7 @@ export default class UsersController
             code: the_code,
             expiration_date_time: DateTime.now().plus({ hours: 2 }),
         });
-        let url_validation = `https://mysticker.io/validation/${validation_code.code}`;
+        let url_validation = `${Env.get('FRONT_URL')}/validation/${validation_code.code}`;
         // enviando o email de confirmação
         send_email(
             email,

@@ -22,4 +22,5 @@ export default Env.rules({
     DRIVE_DISK: Env.schema.enum(['local'] as const),
     NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
     CONTRACT_ADDRESS: Env.schema.string(),
+    FRONT_URL: Env.schema.string(),
 })

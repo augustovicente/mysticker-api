@@ -11,12 +11,12 @@ export default class DrawController
         const user = await auth.authenticate();
         const { address, package_type, amount } = await request.validate(OpenPackageValidator);
         // check if wallet is vinculated
-        
+
         const wallet = await Wallet.query()
             .where('user_id', user.id)
             .andWhereRaw(`address ilike '%${address}%'`)
             .firstOrFail()
-        
+
         if(!!wallet)
         {
             let stickers_drawed:Sticker[] = [];
@@ -50,7 +50,7 @@ export default class DrawController
             .where('user_id', user.id)
             .andWhereRaw(`address ilike '%${address}%'`)
             .firstOrFail()
-        
+
         if(!!wallet)
         {
             let has_all_from_country = await check_if_has_all_from_country(country_id, address);
