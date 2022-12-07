@@ -112,6 +112,23 @@ export default class UsersController
         }
     }
 
+    public async unvinculate_wallet ({ request, response, auth }: HttpContextContract)
+    {
+        const { wallet } = await request.validate(WalletValidator);
+
+        try {
+            await auth.user!.related('wallets').query().where('address', wallet).delete();
+
+            return response.ok({
+                message: 'Wallet unvinculated successfully'
+            });
+        } catch (error) {
+            return response.internalServerError({
+                message: 'Error unvinculating wallet',
+            })
+        }
+    }
+
     public async has_redeem ({ params, response, auth }: HttpContextContract)
     {
         const prize_type = Number(params.prize_type);

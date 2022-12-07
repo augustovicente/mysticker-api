@@ -37,6 +37,7 @@ Route.post('reset-password', 'AuthController.reset_password').middleware('auth')
 Route.post('get-authenticated-user', 'AuthController.get_authenticated_user').middleware('auth');
 Route.post('edit-data', 'UserController.edit_data').middleware('auth');
 Route.post('vinculate-wallet', 'UserController.vinculate_wallet').middleware('auth');
+Route.post('unvinculate-wallet', 'UserController.vinculate_wallet').middleware('auth');
 
 Route.post('open-package', 'DrawController.open_package').middleware('auth');
 Route.post('paste-stickers', 'DrawController.paste_sticker').middleware('auth');

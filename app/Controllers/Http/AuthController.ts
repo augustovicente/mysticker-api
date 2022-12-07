@@ -17,6 +17,9 @@ export default class AuthController
             token: Record<string, any> | null = null;
 
         user = await User.findByOrFail('email', email);
+
+        await user.load('wallets', q => q.select('address'))
+
         // verificando se o email foi confirmado
         if(user.email_verified)
         {
@@ -121,6 +124,7 @@ export default class AuthController
     public async get_authenticated_user ({ auth, response }: HttpContextContract)
     {
         const user = await auth.authenticate();
+        await user.load('wallets', q => q.select('address'))
 
         return response.send(user);
     }
