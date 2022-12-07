@@ -1,4 +1,5 @@
-import { abi, contract_address } from "App/Solidity/contract";
+import Env from '@ioc:Adonis/Core/Env'
+import { abi } from "App/Solidity/contract";
 import { stickers } from "App/Solidity/stickers";
 import { no_wallet_web3 } from "./Web3Service";
 export type Sticker = {
@@ -11,7 +12,7 @@ const get_available_stickers_batch: (ids:number[]) => Promise<number[]> = (ids:n
 {
     return new Promise((resolve, reject) =>
     {
-        const contract = new no_wallet_web3.eth.Contract(abi as any, contract_address);
+        const contract = new no_wallet_web3.eth.Contract(abi as any, Env.get('CONTRACT_ADDRESS'));
         contract.methods.getAvailableBatch(ids).call().then((result) =>
         {
             resolve(result);
@@ -70,7 +71,7 @@ const get_all_stickers = async () =>
     let available_broze = await get_available_stickers_batch(all_stickers.bronze.map((sticker) => sticker.id));
     let available_silver = await get_available_stickers_batch(all_stickers.silver.map((sticker) => sticker.id));
     let available_gold = await get_available_stickers_batch(all_stickers.gold.map((sticker) => sticker.id));
-    
+
     for (const [_i, available] of available_broze.entries())
     {
         if(available > 0)
@@ -119,7 +120,7 @@ const check_if_has_all_from_country = async (country_id: number, user_address:st
         {
             for(const player of country.players)
             {
-                const contract = new no_wallet_web3.eth.Contract(abi as any, contract_address);
+                const contract = new no_wallet_web3.eth.Contract(abi as any, Env.get('CONTRACT_ADDRESS'));
                 const amount = await contract.methods.balanceOf(user_address, player.id).call()
                 if(amount > 0)
                 {

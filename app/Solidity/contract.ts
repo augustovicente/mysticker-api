@@ -1,5 +1,5 @@
 // contrato produção
-export const contract_address = '0x5E27989328B387b010B43ef0095C5a6e765BE5d0';
+// export const contract_address = '0x5E27989328B387b010B43ef0095C5a6e765BE5d0';
 // contrato test polygon
 // export const contract_address = '0x77c551dC1159460F5028a4b132a379F5fCa9d3F5';
 export const abi = [
