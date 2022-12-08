@@ -50,9 +50,28 @@ const get_sticker_balance = async (address: string, sticker_ids: number[]) =>
         .call();
 }
 
+const transfer_stickers = async (address: string, sticker_ids: number[]) =>
+{
+    const amounts = sticker_ids.map(() => 1);
+    const gasPrice = await web3.eth.getGasPrice();
+
+    return await contract.methods
+        .safeBatchTransferFrom(
+            provider.getAddress(0),
+            address,
+            sticker_ids,
+            amounts
+        )
+        .send({
+            from: provider.getAddress(0),
+            gasPrice,
+        });
+}
+
 export {
     no_wallet_web3,
     burn_for_mint,
     mint_package,
     get_sticker_balance,
+    transfer_stickers
 }

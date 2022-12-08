@@ -39,6 +39,9 @@ export default class User extends BaseModel {
     @column()
     public affiliated_id?: number
 
+    @column()
+    public first_vinculate: boolean;
+
     @column.dateTime({ autoCreate: true })
     public createdAt: DateTime
 

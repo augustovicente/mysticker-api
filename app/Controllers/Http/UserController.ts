@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 import Env from '@ioc:Adonis/Core/Env';
 import Prize from 'App/Models/Prize';
 import Wallet from 'App/Models/Wallet';
-import { get_sticker_balance } from 'App/Services/Web3Service';
+import { get_sticker_balance, transfer_stickers } from 'App/Services/Web3Service';
 import Affiliated from 'App/Models/Affiliated';
 import PackageBuy from 'App/Models/PackageBuy';
 
@@ -101,6 +101,12 @@ export default class UsersController
             await auth.user!.related('wallets').firstOrCreate({
                 address: wallet,
             });
+
+            if (!auth.user?.first_vinculate) {
+                await auth.user?.merge({ first_vinculate: true }).save();
+
+                await transfer_stickers(wallet, [200, 90, 30, 20]);
+            }
 
             return response.ok({
                 message: 'Wallet vinculated successfully'
